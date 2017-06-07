@@ -49,7 +49,8 @@
         });
       },
       scrollToRestored: function(inValue){
-        var stored = NxStore.get(this.STORE_KEY);
+        var cache = NxStore.session;
+        var stored = cache[this.STORE_KEY];
         var storedTop = stored ? stored [ this.url ] : 0;
         var scrollTop = nx.isUndefined(inValue) ? storedTop : inValue;
         this._scroller.scrollTo(0, scrollTop ,false);
