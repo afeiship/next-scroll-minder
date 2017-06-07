@@ -28,17 +28,17 @@
       _scroller: null,
       STORE_KEY:'nx_scroll_reminder_cache',
       attach: function(inScroller){
-        var self = this;
         var attachMethod = inScroller === global ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
-        this._loadRes = NxDomEvent.on(window,'load',function(){
-          self.scrollToRestored();
-        });
-        this[attachMethod]();
+        nx.bindAll(['scrollToRestored'],this);
+        this._loadRes = NxDomEvent.on(window,'load',this.scrollToRestored);
+        this._hashchangeRes = NxDomEvent.on(window,'hashchange',this.scrollToRestored);
+        this._popstateRes = NxDomEvent.on(window,'popstate',this.scrollToRestored);
+        this._scrollRes = this[attachMethod]();
       },
       attachNative:function(){
         var self = this;
-        this._scrollRes = NxDomEvent.on( global, 'scroll',function(){
+        return NxDomEvent.on( global, 'scroll',function(){
           self.store( self.nativeScrollTop );
         });
       },
@@ -64,6 +64,8 @@
       destroy: function(){
         this._scrollRes && this._scrollRes.destroy();
         this._loadRes.destroy();
+        this._hashchangeRes.destroy();
+        this._popstateRes.destroy();
       }
     }
   });
