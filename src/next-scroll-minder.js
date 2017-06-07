@@ -4,7 +4,7 @@
 
   var nx = global.nx || require('next-js-core2');
   var NxStore = nx.Store ||  require('next-store');
-  var NxDomEvent = nx.dom.Event ||  require('next-dom-event');
+  var NxDomEvent = (nx.dom && nx.dom.Event) ||  require('next-dom-event');
   var document = global.document;
   var isNative = function(inValue){
     return inValue === global;
