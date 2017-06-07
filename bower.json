@@ -1,0 +1,26 @@
+{
+  "name": "next-scroll-minder",
+  "description": "Scroll reminder for native OR simulate scroller.",
+  "main": "dist/next-scroll-minder.js",
+  "authors": [
+    "afei"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "next"
+  ],
+  "homepage": "https://github.com/afeiship/next-scroll-minder",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "gulp",
+    "gulpfile.js"
+  ]
+}
