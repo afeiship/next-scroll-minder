@@ -14,7 +14,7 @@ import NxScrollMinder from 'next-scroll-minder';
 //attach when window/your scroller loaded:
 NxScrollMinder.attach(window/this._scroller);
 NxScrollMinder.attachNative(window);
-NxScrollMinder.attachNative(this._scroller);
+NxScrollMinder.attachSimulate(this._scroller);
 // manual trigger if you needed:
 NxScrollMinder.scrollToRestored();
 ```
