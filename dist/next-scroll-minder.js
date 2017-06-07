@@ -34,6 +34,7 @@
         this._loadRes = NxDomEvent.on(window,'load',this.scrollToRestored);
         this._hashchangeRes = NxDomEvent.on(window,'hashchange',this.scrollToRestored);
         this._popstateRes = NxDomEvent.on(window,'popstate',this.scrollToRestored);
+        this._pageshowRes = NxDomEvent.on(window,'pageshow',this.scrollToRestored);
         this._scrollRes = this[attachMethod]();
       },
       attachNative:function(){
@@ -66,6 +67,7 @@
         this._loadRes.destroy();
         this._hashchangeRes.destroy();
         this._popstateRes.destroy();
+        this._pageshowRes.destroy();
       }
     }
   });
