@@ -28,10 +28,11 @@
       _scroller: null,
       STORE_KEY:'nx_scroll_reminder_cache',
       attach: function(inScroller){
+        var self = this;
         var attachMethod = inScroller === global ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
         this._loadRes = NxDomEvent.on(window,'load',function(){
-          this.scrollToRestored();
+          self.scrollToRestored();
         });
         this[attachMethod]();
       },
