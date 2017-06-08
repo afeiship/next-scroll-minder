@@ -24,6 +24,7 @@
     "yargs": "^4.7.1"
   },
   "dependencies": {
+    "next-debounce-throttle": "github:afeiship/next-debounce-throttle",
     "next-dom-event": "github:afeiship/next-dom-event",
     "next-js-core2": "github:afeiship/next-js-core2",
     "next-store": "github:afeiship/next-store"
