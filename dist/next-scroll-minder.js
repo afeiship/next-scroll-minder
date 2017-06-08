@@ -29,7 +29,7 @@
       _cache: {},
       _scroller: null,
       _manual: false,
-      STORE_KEY: 'nx_scroll_reminder_cache',
+      STORE_KEY: '__NX_SCROLL_REMINDER_CACHE__',
       attach: function (inScroller) {
         var attachMethod = inScroller === global ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
