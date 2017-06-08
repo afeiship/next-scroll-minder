@@ -6,7 +6,7 @@
   var NxStore = nx.Store || require('next-store');
   var NxDomEvent = (nx.dom && nx.dom.Event) || require('next-dom-event');
   var document = global.document;
-  var NxDebounceThrottle = global.nx || require('next-debounce-throttle');
+  var NxDebounceThrottle = nx.NxDebounceThrottle || require('next-debounce-throttle');
   
   var isNative = function (inValue) {
     return inValue === global;
@@ -56,7 +56,7 @@
       attachSimulate: function () {
         var self = this;
         this._scroller.on('scroll', function (inValues) {
-          self.store(inValues.top);
+          self.delayStore(inValues.top);
         });
       },
       scrollToRestored: function (inValue) {
