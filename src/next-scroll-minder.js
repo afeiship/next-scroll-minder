@@ -6,11 +6,7 @@
   var NxStore = nx.Store || require('next-store');
   var NxDomEvent = (nx.dom && nx.dom.Event) || require('next-dom-event');
   var document = global.document;
-  var NxDebounceThrottle = nx.NxDebounceThrottle || require('next-debounce-throttle');
-  
-  var isNative = function (inValue) {
-    return inValue === global;
-  };
+  var NxDebounceThrottle = nx.DebounceThrouttle || require('next-debounce-throttle');
 
   var NxScrollMinder = nx.declare('nx.ScrollMinder', {
     properties: {
@@ -19,9 +15,13 @@
           return global.location.href;
         }
       },
-      nativeScrollTop: {
-        get: function () {
-          return document.documentElement.scrollTop || document.body.scrollTop || 0;
+      scrollTop: {
+        get: function(){
+          if(this._isNative){
+            return document.documentElement.scrollTop || document.body.scrollTop || 0;
+          }else{
+            return this._scroller.getValues().top;
+          }
         }
       }
     },
@@ -29,11 +29,13 @@
       _cache: {},
       _scroller: null,
       _manual: false,
+      _isNative: false,
       STORE_KEY: '__NX_SCROLL_REMINDER_CACHE__',
       attach: function (inScroller) {
-        var attachMethod = inScroller === global ? 'attachNative' : 'attachSimulate';
+        var isNative = this._isNative = inScroller === global;
+        var attachMethod = isNative ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
-        nx.bindAll(['scrollToRestored'], this);
+        nx.bindAll(['scrollToRestored','delayStore'], this);
         //scroll to restored if has loaed:
         this.scrollToRestored();
         //attach events:
@@ -49,33 +51,26 @@
       },
       attachNative: function () {
         var self = this;
-        return NxDomEvent.on(global, 'scroll', function () {
-          self.delayStore(self.nativeScrollTop);
-        });
+        return NxDomEvent.on( global, 'scroll', this.delayStore);
       },
       attachSimulate: function () {
         var self = this;
-        this._scroller.on('scroll', function (inValues) {
-          self.delayStore(inValues.top);
-        });
+        return this._scroller.on('scroll', this.delayStore);
       },
       scrollToRestored: function (inValue) {
         var cache = NxStore.session;
         var stored = cache[this.STORE_KEY];
         var storedTop = stored ? stored [this.url] : 0;
         var scrollTop = nx.isNumber(storedTop) ? storedTop : inValue;
-
+        scrollTop = scrollTop || 0;
 
         this._manual = scrollTop !== 0;
         this._scroller.scrollTo(0, scrollTop, false);
       },
-      delayStore: function (inValue) {
-        var self = this;
-        NxDebounceThrottle.debounce(function () {
-          self.store(inValue);
-          self._manual = false;
-        }, 100);
-      },
+      delayStore: NxDebounceThrottle.debounce(function(){
+        this.store(this.scrollTop);
+        this._manual = false;
+      },100, NxScrollMinder),
       store: function (inValue) {
         if (!this._manual) {
           var stored = {};
