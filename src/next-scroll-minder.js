@@ -26,6 +26,7 @@
     statics:{
       _cache:{},
       _scroller: null,
+      _manual:false,
       STORE_KEY:'nx_scroll_reminder_cache',
       attach: function(inScroller){
         var attachMethod = inScroller === global ? 'attachNative' : 'attachSimulate';
@@ -61,13 +62,19 @@
         var stored = cache[this.STORE_KEY];
         var storedTop = stored ? stored [ this.url ] : 0;
         var scrollTop = nx.isNumber(storedTop) ? storedTop : inValue;
+
+        //todo: optimze 
+        this._manual = true;
         this._scroller.scrollTo(0, scrollTop ,false);
+        this._manual = false;
       },
       store: function(inValue){
-        var stored = {};
-        this._cache [ this.url ] = inValue;
-        stored[this.STORE_KEY] = this._cache;
-        NxStore.session = stored;
+        if(!this._manual){
+          var stored = {};
+          this._cache [ this.url ] = inValue;
+          stored[this.STORE_KEY] = this._cache;
+          NxStore.session = stored;
+        }
       },
       destroy: function(){
         this._scrollRes && this._scrollRes.destroy();
