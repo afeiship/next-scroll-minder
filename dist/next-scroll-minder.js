@@ -31,11 +31,18 @@
         var attachMethod = inScroller === global ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
         nx.bindAll(['scrollToRestored'],this);
+        //scroll to restored if has loaed:
+        this.scrollToRestored();
+        //attach events:
+        this.attachEvents();
+        //attach to scroll:
+        this._scrollRes = this[attachMethod]();
+      },
+      attachEvents: function(){
         this._loadRes = NxDomEvent.on(window,'load',this.scrollToRestored);
         this._hashchangeRes = NxDomEvent.on(window,'hashchange',this.scrollToRestored);
         this._popstateRes = NxDomEvent.on(window,'popstate',this.scrollToRestored);
         this._pageshowRes = NxDomEvent.on(window,'pageshow',this.scrollToRestored);
-        this._scrollRes = this[attachMethod]();
       },
       attachNative:function(){
         var self = this;
