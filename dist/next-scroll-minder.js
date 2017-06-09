@@ -72,11 +72,9 @@
       store: function (inValue) {
         if (!this._manual) {
           var stored = {};
+          var session = NxStore.session;
           this._cache [this.url] = inValue;
-          stored[this.STORE_KEY] = nx.mix(
-            stored[this.STORE_KEY],
-            this._cache
-          );
+          stored[this.STORE_KEY] = nx.mix( session[this.STORE_KEY], this._cache );
           NxStore.session = stored;
         }
       },
