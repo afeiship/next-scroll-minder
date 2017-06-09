@@ -50,11 +50,9 @@
         this._pageshowRes = NxDomEvent.on(window, 'pageshow', this.scrollToRestored);
       },
       attachNative: function () {
-        var self = this;
         return NxDomEvent.on( global, 'scroll', this.delayStore);
       },
       attachSimulate: function () {
-        var self = this;
         return this._scroller.on('scroll', this.delayStore);
       },
       scrollToRestored: function (inValue) {
@@ -75,7 +73,10 @@
         if (!this._manual) {
           var stored = {};
           this._cache [this.url] = inValue;
-          stored[this.STORE_KEY] = this._cache;
+          stored[this.STORE_KEY] = nx.mix(
+            stored[this.STORE_KEY],
+            this._cache
+          );
           NxStore.session = stored;
         }
       },
