@@ -54,6 +54,7 @@
       },
       globalLoaded: function () {
         !this._loaded && this.scrollToRestored();
+        // this._loaded = true;
       },
       scrollToRestored: function (inValue) {
         var stored = this._store.session;
