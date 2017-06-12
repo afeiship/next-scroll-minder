@@ -12,7 +12,7 @@
     properties: {
       scrollTop: {
         get: function () {
-          if (this._isNative) {
+          if (this._isWindow) {
             return document.documentElement.scrollTop || document.body.scrollTop || 0;
           } else {
             return this._scroller.getValues().top;
@@ -24,14 +24,14 @@
       _scroller: null,
       _manual: false,
       _loaded: false,
-      _isNative: false,
+      _isWindow: false,
       STORE_KEY: '__NX_SCROLL_REMINDER_CACHE__',
       init: function () {
         this._store = new NxUrlStore(this.STORE_KEY);
       },
       attach: function (inScroller) {
-        var isNative = this._isNative = inScroller === global;
-        var attachMethod = isNative ? 'attachNative' : 'attachSimulate';
+        var isWindow = this._isWindow = inScroller === global;
+        var attachMethod = isWindow ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
         nx.bindAll(['globalLoaded', 'scrollToRestored', 'delayStore'], this);
         this.globalLoaded();

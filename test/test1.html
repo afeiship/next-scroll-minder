@@ -33,7 +33,15 @@
 
 
     <script>
-      nx.ScrollMinder.attach(window);
+      window.onpageshow = function(){
+        console.log('page show?');
+      };
+
+      window.onpagehide = function(){
+        console.log('page hide?');
+        alert('sure?');
+      };
+      // nx.ScrollMinder.attach(window);
     </script>
 </body>
 </html>

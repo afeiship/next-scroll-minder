@@ -9,6 +9,8 @@ npm install afeiship/next-scroll-minder
 
 ## usage:
 ```js
+// history.scrollRestoration
+
 import NxScrollMinder from 'next-scroll-minder';
 
 //attach when window/your scroller loaded:
