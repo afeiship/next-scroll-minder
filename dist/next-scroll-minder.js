@@ -66,9 +66,10 @@
         this._scroller.scrollTo(0, scrollTop, false);
       },
       delayStore: NxDebounceThrottle.debounce(function () {
-        this.store(this.scrollTop);
-        this._manual = false;
-      }, 100, NxScrollMinder),
+        var self = this;
+        self.store(self.scrollTop);
+        self._manual = false;
+      }, 100),
       store: function (inValue) {
         if (!this._manual) {
           this._store.session = {
