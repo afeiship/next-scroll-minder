@@ -66,7 +66,7 @@
         this._scroller.scrollTo(0, scrollTop, false);
       },
       delayStore: NxDebounceThrottle.debounce(function () {
-        var self = this;
+        var self = NxScrollMinder;
         self.store(self.scrollTop);
         self._manual = false;
       }, 100),
