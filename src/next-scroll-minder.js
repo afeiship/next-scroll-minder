@@ -25,9 +25,8 @@
       _manual: false,
       _loaded: false,
       _isWindow: false,
-      STORE_KEY: '__NX_SCROLL_REMINDER_CACHE__',
       init: function () {
-        this._store = new NxUrlStore(this.STORE_KEY);
+        this._store = new NxUrlStore('__NX_SCROLL_REMINDER_CACHE__');
       },
       attach: function (inScroller) {
         var isWindow = this._isWindow = inScroller === global;
@@ -63,7 +62,7 @@
         var value = nx.isNumber(inValue) || 0;
         scrollTop = scrollTop || value;
 
-        this._manual = scrollTop !== 0;
+        // this._manual = scrollTop !== 0;
         this._scroller.scrollTo(0, scrollTop, false);
       },
       delayStore: NxDebounceThrottle.debounce(function () {
