@@ -35,16 +35,8 @@
         nx.binds(this, ['globalLoaded', 'scrollToRestored', 'delayStore']);
 
         this.globalLoaded();
-        //attach events:
-        this.attachEvents();
         //attach to scroll:
         this._scrollRes = this[attachMethod]();
-      },
-      attachEvents: function () {
-        this._loadRes = NxDomEvent.on(window, 'load', this.globalLoaded);
-        this._hashchangeRes = NxDomEvent.on(window, 'hashchange', this.globalLoaded);
-        this._popstateRes = NxDomEvent.on(window, 'popstate', this.globalLoaded);
-        this._pageshowRes = NxDomEvent.on(window, 'pageshow', this.globalLoaded);
       },
       attachNative: function () {
         return NxDomEvent.on(global, 'scroll', this.delayStore);
@@ -53,8 +45,10 @@
         return this._scroller.on('scroll', this.delayStore);
       },
       globalLoaded: function () {
-        this.scrollToRestored();
-        this._loaded = true;
+        if (!this._loaded) {
+          this.scrollToRestored();
+          this._loaded = true;
+        }
       },
       scrollToRestored: function (inValue) {
         var stored = this._store.session;
@@ -62,7 +56,6 @@
         var value = nx.isNumber(inValue) || 0;
         scrollTop = scrollTop || value;
 
-        // this._manual = scrollTop !== 0;
         this._scroller.scrollTo(0, scrollTop, false);
       },
       delayStore: NxDebounceThrottle.debounce(function () {
@@ -79,10 +72,6 @@
       },
       destroy: function () {
         this._scrollRes && this._scrollRes.destroy();
-        this._loadRes.destroy();
-        this._hashchangeRes.destroy();
-        this._popstateRes.destroy();
-        this._pageshowRes.destroy();
       }
     }
   });
