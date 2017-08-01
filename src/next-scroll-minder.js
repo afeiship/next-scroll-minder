@@ -36,13 +36,7 @@
 
         this.globalLoaded();
         //attach to scroll:
-        this._scrollRes = this[attachMethod]();
-      },
-      attachNative: function () {
-        return NxDomEvent.on(global, 'scroll', this.delayStore);
-      },
-      attachSimulate: function () {
-        return this._scroller.on('scroll', this.delayStore);
+        this._scrollRes = NxDomEvent.on(inScroller, 'scroll', this.delayStore);
       },
       globalLoaded: function () {
         if (!this._loaded) {
