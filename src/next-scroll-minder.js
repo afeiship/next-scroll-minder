@@ -33,7 +33,8 @@
         var isWindow = this._isWindow = inScroller === global;
         var attachMethod = isWindow ? 'attachNative' : 'attachSimulate';
         this._scroller = inScroller;
-        nx.binds(['globalLoaded', 'scrollToRestored', 'delayStore'], this);
+        nx.binds(this, ['globalLoaded', 'scrollToRestored', 'delayStore']);
+
         this.globalLoaded();
         //attach events:
         this.attachEvents();
