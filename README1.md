@@ -20,9 +20,3 @@ NxScrollMinder.attachSimulate(this._scroller);
 // manual trigger if you needed:
 NxScrollMinder.scrollToRestored();
 ```
-
-
-## resources:
-
-## todos:
-- [ ] todo list..
