@@ -5,7 +5,6 @@
   var nx = global.nx || require('next-js-core2');
   var NxDomEvent = (nx.dom && nx.dom.Event) || require('next-dom-event');
   var document = global.document;
-  var NxDebounceThrottle = nx.DebounceThrouttle || require('next-debounce-throttle');
   var NxUrlStore = nx.UrlStore || require('next-url-store');
 
   var NxScrollMinder = nx.declare('nx.ScrollMinder', {
@@ -52,7 +51,7 @@
 
         this._scroller.scrollTo(0, scrollTop, false);
       },
-      delayStore: NxDebounceThrottle.debounce(function () {
+      delayStore: nx.debounce(function () {
         var self = NxScrollMinder;
         self.store(self.scrollTop);
         self._manual = false;
